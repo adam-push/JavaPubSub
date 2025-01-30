@@ -20,22 +20,10 @@ public class  Publisher {
 
         TopicSpecification spec = Diffusion.newTopicSpecification(TopicType.JSON);
 
-        // Add topic with "String" type
-        session.feature(TopicControl.class)
-                .addTopic("my/json/topic", spec)
-                .whenComplete((result, err) -> {
-                    if(err != null) {
-                        System.err.println(err.getMessage());
-                    }
-                    else {
-                        System.out.println("Topic added successfully: " + result);
-                    }
-                });
-
         // Update our topic
         for(int i = 0; i < 100; i++) {
             session.feature(TopicUpdate.class)
-                    .set("my/json/topic", JSON.class, Diffusion.dataTypes().json().fromJsonString("{\"counter\": " + i +"}"));
+                    .addAndSet("my/json/topic", spec, JSON.class, Diffusion.dataTypes().json().fromJsonString("{\"counter\": " + i +"}"));
             Thread.sleep(1000);
         }
 
