@@ -29,8 +29,11 @@ public class  Publisher {
                 });
 
         // Update our topic
-        session.feature(TopicUpdate.class)
-                        .set("my/first/topic", String.class, "Hello, world");
+        for(int i = 0; i < 100; i++) {
+            session.feature(TopicUpdate.class)
+                    .set("my/first/topic", String.class, "Hello, world : " + i);
+            Thread.sleep(1000);
+        }
 
         Thread.sleep(1000);
         session.close();
