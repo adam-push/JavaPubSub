@@ -4,6 +4,7 @@ import com.pushtechnology.diffusion.client.Diffusion;
 import com.pushtechnology.diffusion.client.features.TopicUpdate;
 import com.pushtechnology.diffusion.client.features.control.topics.TopicControl;
 import com.pushtechnology.diffusion.client.session.Session;
+import com.pushtechnology.diffusion.client.topics.details.TopicSpecification;
 import com.pushtechnology.diffusion.client.topics.details.TopicType;
 
 public class  Publisher {
@@ -16,9 +17,12 @@ public class  Publisher {
 
         System.out.println("SessionID = " + session.getSessionId());
 
+        TopicSpecification spec = Diffusion.newTopicSpecification(TopicType.STRING)
+                .withProperty(TopicSpecification.COMPRESSION,"off");
+
         // Add topic with "String" type
         session.feature(TopicControl.class)
-                .addTopic("my/first/topic", TopicType.STRING)
+                .addTopic("my/first/topic", spec)
                 .whenComplete((result, err) -> {
                     if(err != null) {
                         System.err.println(err.getMessage());
