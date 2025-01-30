@@ -1,6 +1,7 @@
 package com.diffusion.training;
 
 import com.pushtechnology.diffusion.client.Diffusion;
+import com.pushtechnology.diffusion.client.features.TopicUpdate;
 import com.pushtechnology.diffusion.client.features.control.topics.TopicControl;
 import com.pushtechnology.diffusion.client.session.Session;
 import com.pushtechnology.diffusion.client.topics.details.TopicType;
@@ -26,6 +27,10 @@ public class  Publisher {
                         System.out.println("Topic added successfully: " + result);
                     }
                 });
+
+        // Update our topic
+        session.feature(TopicUpdate.class)
+                        .set("my/first/topic", String.class, "Hello, world");
 
         Thread.sleep(1000);
         session.close();
