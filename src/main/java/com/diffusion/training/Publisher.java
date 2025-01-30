@@ -1,7 +1,9 @@
 package com.diffusion.training;
 
 import com.pushtechnology.diffusion.client.Diffusion;
+import com.pushtechnology.diffusion.client.features.control.topics.TopicControl;
 import com.pushtechnology.diffusion.client.session.Session;
+import com.pushtechnology.diffusion.client.topics.details.TopicType;
 
 public class  Publisher {
 
@@ -13,6 +15,19 @@ public class  Publisher {
 
         System.out.println("SessionID = " + session.getSessionId());
 
+        // Add topic with "String" type
+        session.feature(TopicControl.class)
+                .addTopic("my/first/topic", TopicType.STRING)
+                .whenComplete((result, err) -> {
+                    if(err != null) {
+                        System.err.println(err.getMessage());
+                    }
+                    else {
+                        System.out.println("Topic added successfully: " + result);
+                    }
+                });
+
+        Thread.sleep(1000);
         session.close();
     }
 
